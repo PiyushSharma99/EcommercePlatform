@@ -1,0 +1,15 @@
+@media (min-width: 1025px) {
+    .h-custom {
+    height: 100vh !important;
+    }
+    }
+
+    .btn {
+        background: #f44343;
+        border: none;
+        line-height: normal;
+    }
+    
+    .btn:hover,.btn:focus {
+        background: #f44343;
+    }

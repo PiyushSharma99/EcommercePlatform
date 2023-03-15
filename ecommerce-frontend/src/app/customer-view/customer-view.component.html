@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style = "background:#f44343 !important;">
+    <div class="container-fluid">
+        <a class="navbar-brand abs" style = "color: white;" routerLink ="/">Ecommerce</a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="collapseNavbar">
+            <ul class="navbar-nav">            </ul>
+            <ul class="navbar-nav ms-auto">
+                
+                <li class="nav-item">
+                    <a style = "color:white;"class="nav-link active" aria-current="page">Hi, {{name}}</a>
+                </li>
+                <li class="nav-item">
+                    <img [src]="userImage" width="40px" height="40px" class="img-responsive">
+                </li>
+                <li class="nav-item">
+                  <a style = "color:white;" class="nav-link" type = "button" (click) = "onLogout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+  <br>  
+
+  <div  class="container bg-trasparent my-4 p-3" style="position: relative">
+    <div  class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      <div *ngFor="let productOrder of productOrders" class="col hp">
+        
+        <div class="card  shadow-sm">
+            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                <img [src]=productOrder.product.productImage height="215px" width = "215px" class="w-100"/>
+              </div>
+            
+
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <p class="small" ><a class="text-muted">{{productOrder.product.category}}</a></p>
+                <p class="small text-danger" *ngIf = "!productOrder.isDiscountZero"><s>₹{{productOrder.product.price}}</s></p>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+                <h6 class="mb-0">{{productOrder.product.productName}}</h6>
+                <h6 class="text-dark mb-0">₹{{productOrder.effectivePrice}}</h6>
+              </div>
+
+              <div class="d-flex justify-content-between mb-3">
+              <p class="text-truncate mb-4 mb-md-0">
+                {{productOrder.product.productDescription}}
+              </p>
+              </div>
+          
+            <div class="d-flex justify-content-between mb-3">                    
+                    <button class="btn btn-primary" (click) = "buyNow(productOrder)" type = "submit"> Buy Now </button>
+                    
+            </div>
+            <div class="clearfix mb-1">
+  
+              <span class="float-start"><a href="#"><i class="fas fa-question-circle"></i></a></span>
+  
+              <span class="float-end">
+                <i class="far fa-heart" style="cursor: pointer"></i>
+  
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+
+<footer id="footer" class="text-center text-lg-start bg-light text-muted" style = "background:#f44343 !important; color: white;">
+
+  <div class="text-center p-4" style="color:white">
+    © 2022 Copyright:
+    <a  style="color:white">Nagarro Training</a>
+  </div>
+
+</footer>

@@ -1,0 +1,138 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style = "background:#f44343 !important;">
+    <div class="container-fluid">
+        <a class="navbar-brand abs" routerLink="/" style="color: white;">Ecommerce</a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="collapseNavbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active"  style="color: white;"aria-current="page">Hi, {{name}}</a>
+                </li>
+                <li class="nav-item">
+                    <img [src]="retrievedImage" width="40px" height="40px" class="img-responsive">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white;" type = "button" (click) = "onLogout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<div class="register-form container">
+    <form class="needs-validation" #reportForm="ngForm" (ngSubmit)="onSubmit(reportForm)" novalidate>
+  
+      <h4 class="modal-title"><b>Vendor Sales Report</b> </h4>
+      <p *ngIf ="noDataFound" style="text-align:center; color:red"> No Order Found For Given Details </p>
+      <div class="row jumbotron">
+
+         <div class="col-sm-6 form-group">
+          <label for="productName">From Date</label>
+          <input type="text" [(ngModel)]="salesReportModel.fromDate" #fromDate="ngModel" class="form-control" name="fromDate" id="fromDate" placeholder="dd/mm/yyyy" onfocus="(this.type='date')"
+             required [ngClass]="{ 'is-invalid': reportForm.submitted && fromDate.errors }">
+          <div *ngIf="reportForm.submitted && fromDate.errors" class="invalid-feedback">
+            <div *ngIf="fromDate.errors['required']">From Date is required</div>
+          </div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+            <label for="productName">To Date</label>
+            <input type="text" [(ngModel)]="salesReportModel.toDate" #toDate="ngModel" class="form-control" name="toDate" id="toDate" placeholder="dd/mm/yyyy" onfocus="(this.type='date')"
+               required [ngClass]="{ 'is-invalid': reportForm.submitted && toDate.errors }">
+            <div *ngIf="reportForm.submitted && toDate.errors" class="invalid-feedback">
+              <div *ngIf="toDate.errors['required']">To Date is required</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 form-group">
+            <label for="productName">Brand</label>
+            <select id="brand" class="form-control" name="brand" [(ngModel)]="salesReportModel.brand" #brand="ngModel" [ngClass]="{ 'is-invalid': reportForm.submitted && brand.errors }" required> 
+                <option [ngValue]="undefined" selected disabled> Choose Brand</option>
+                <option *ngFor="let b of brands" [ngValue]="b">
+                {{b}}
+              </option>
+            </select>
+            <div *ngIf="reportForm.submitted && brand.errors" class="invalid-feedback">
+                <div *ngIf="salesReportModel.brand === 'none' ">Brand is Required</div>
+                <div *ngIf="brand.errors['required']">Brand is Required</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 form-group">
+            <label for="productName">Category</label>
+            <select id="category" class="form-control" name="category" [(ngModel)]="salesReportModel.category" #category="ngModel" [ngClass]="{ 'is-invalid': reportForm.submitted && category.errors }" required> 
+                <option [ngValue]="undefined" selected disabled> Choose Category</option>
+                <option *ngFor="let c of categories" [ngValue]="c">
+                {{c}}
+              </option>
+            </select>
+            <div *ngIf="reportForm.submitted && category.errors" class="invalid-feedback">
+                <div *ngIf="category.errors['required']">Category is Required</div>
+            </div>
+          </div>
+       
+  
+        <div class="col-sm-12 form-group mb-0">
+          <button class="btn btn-primary float-right" type="submit" name="submit" value="Submit">Generate Report</button> &nbsp;
+          <button class="btn btn-primary" type="reset" (click)="onReset(reportForm)"> Clear </button>
+        </div>
+  
+      </div>
+  
+      <table *ngIf = "salesReport.length !== 0" class = "table table-bordered">
+        <thead> 
+            <tr>
+                <th style="text-align:center;" colspan="10">Sales Report Table</th>  
+            </tr>
+        </thead>
+        <thead>
+            <tr style="text-align: center;">
+                <th>Date Created</th>
+                <th>Product Name</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Order Id</th>
+                <th>Quantity</th>
+                <th> Price </th>
+                <th> Discount </th>
+                <th>EffectivePrice</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let sales of salesReport" style="text-align: center;">
+                <td> {{sales.dateCreated}}</td>
+                <td> {{sales.productName}}</td>
+                <td> {{sales.name}}</td>
+                <td> {{sales.email}}</td>
+                <td> {{sales.orderId}}</td>
+                <td> {{sales.quantity}}</td>
+                <td> {{sales.price}}</td>
+                <td> {{sales.discount}}</td>
+                <td> {{sales.effectivePrice}}</td>
+                <td> {{sales.total}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr >
+                <th style="text-align:right;" colspan="9">Net Total:</th><td style="text-align:center;" colspan="5">{{showNetToal}}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    </form>
+
+    
+
+</div>
+
+<footer class="text-center text-lg-start bg-light text-muted" style = "background:#f44343 !important; color: white; margin-top: 58rem;">
+
+    <div class="text-center p-4" style="color:white">
+      © 2022 Copyright:
+      <a  style="color:white">Nagarro Training</a>
+    </div>
+
+</footer>

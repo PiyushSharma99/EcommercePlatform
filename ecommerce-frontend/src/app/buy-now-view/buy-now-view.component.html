@@ -1,0 +1,22 @@
+<div class="modal-header" style="background-color: #f44343;">
+    <div class="text-center modal-title w-100">
+        <h4 style="color:white"> Your Shopping Cart </h4></div>
+	<button  style = "color: white;" type="button" class="btn-close shadow-none" (click)="activeModal.dismiss('Cross click')">
+      </button>
+</div>
+<div class="modal-body">
+                <h5 class="text-centre"> Your Items </h5> 
+                <ul *ngFor="let order of orders">
+                    <li>            
+                        {{ order.product.productName }} - ₹{{ order.effectivePrice }} x 1 pcs.            
+                    </li>
+                </ul>
+               
+</div>
+<div class="modal-footer">
+    Total Amount: ₹{{total}} &nbsp;
+    <button style = "color: white;"class="btn btn-light btn-block" (click)="finishOrder(orders,total)"
+        [disabled]="orders.length == 0">  Place Order
+        </button>
+
+</div>

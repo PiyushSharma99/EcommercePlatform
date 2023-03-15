@@ -1,0 +1,22 @@
+<div class="modal-header "style="background-color: red;">
+    <div class="text-center modal-title w-100">
+        <div class="icon-box">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <button type="button" class="btn-close shadow-none" (click)="activeModal.dismiss('Cross click')">
+    </button>
+</div>
+<div class="modal-body">
+    <h4 style = "text-align: center;
+	font-size: 36px;
+	margin: 10px 0;"> Oops </h4>
+    <p style = "text-align: center;">{{failMessage}}</p>
+</div>
+
+<div class="modal-footer">
+    <button style = "color: white;"class="btn btn-light btn-block" (click)="activeModal.dismiss('Cross click')"
+        > {{buttonMessage}}
+        </button>
+
+</div>

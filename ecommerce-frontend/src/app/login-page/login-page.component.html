@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style = "background:#f44343 !important;">
+    <div class="container-fluid">
+        <a class="navbar-brand abs" href="#" style ="text-align: center;
+        float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%; color: white!important; 
+    float:none;">Ecommerce</a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+<div class="login-form">
+    <form class="needs-validation" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+        <h4 class="modal-title">Login </h4>
+        <p *ngIf ="userNotAuthorized" style="text-align:center; color:red"> Invalid Credentials </p>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="loginModel.username"
+                #username="ngModel" name="username" [ngClass]="{ 'is-invalid': loginForm.submitted && username.errors }"
+                required>
+            <div *ngIf="loginForm.submitted && username.errors" class="invalid-feedback">
+                <div *ngIf="username.errors['required']">Username is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" class="form-control" [(ngModel)]="loginModel.password"
+            #password="ngModel" name="password" [ngClass]="{ 'is-invalid': loginForm.submitted && password.errors }"
+            required>
+            <div *ngIf="loginForm.submitted && password.errors" class="invalid-feedback">
+                <div *ngIf="password.errors['required']">Password is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <select id="role" class="form-control" name="role" [(ngModel)]="loginModel.role" #role="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && role.errors }" required> 
+                <option [ngValue]="undefined" selected disabled> Choose Your Role</option>
+                <option *ngFor="let r of roles" [ngValue]="r.name">
+                {{r.name}}
+              </option>
+            </select>
+          
+            <div *ngIf="loginForm.submitted && role.errors" class="invalid-feedback">
+                <div *ngIf="role.errors['required']">Role is required</div>
+            </div>
+          </div>
+
+        <br>
+        <br>
+        <div class="col-sm-12 form-group mb-0">
+            <button class="btn btn-primary float-right" type="submit" name="submit" value="Submit">Login</button> &nbsp;
+            <button class="btn btn-primary" type="reset" (click)="onReset(loginForm)"> Clear </button>
+          </div>
+    
+    </form>
+    <div class="text-center small" style = "font-size: 15px;">Don't have an account? <a routerLink="/signup">Sign up</a></div>
+</div>
+
+<footer class="text-center text-lg-start bg-light text-muted" style = "background:#f44343 !important; color: white;">
+
+    <div class="text-center p-4" style="color:white">
+      © 2022 Copyright:
+      <a  style="color:white">Nagarro Training</a>
+    </div>
+
+</footer>

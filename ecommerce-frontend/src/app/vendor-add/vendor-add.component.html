@@ -1,0 +1,136 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style = "background:#f44343 !important;">
+    <div class="container-fluid">
+        <a class="navbar-brand abs" routerLink="/" style="color: white;">Ecommerce</a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="collapseNavbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active"  style="color: white;"aria-current="page">Hi, {{name}}</a>
+                </li>
+                <li class="nav-item">
+                    <img [src]="retrievedImage" width="40px" height="40px" class="img-responsive">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white;" type = "button" (click) = "onLogout()">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="register-form container">
+    <form class="needs-validation" #productForm="ngForm" (ngSubmit)="onSubmit(productForm)" novalidate enctype="multipart/form-data">
+  
+      <h4 class="modal-title"><b>Add Product</b> </h4>
+      <div class="row jumbotron">
+
+        <div class="col-sm-6 form-group">
+          <label for="productName">Product Name</label>
+          <input type="text" [(ngModel)]="productModel.productName" #productName="ngModel" class="form-control" name="productName" id="productName"
+            placeholder="Enter Your Product Name." required [ngClass]="{ 'is-invalid': productForm.submitted && productName.errors }">
+          <div *ngIf="productForm.submitted && productName.errors" class="invalid-feedback">
+            <div *ngIf="productName.errors['required']">Product Name is required</div>
+          </div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+            <label >Product Description</label>
+            <input type="text" [(ngModel)]="productModel.productDescription" #productDescription="ngModel" class="form-control" name="productDescription" id="productDescription"
+              placeholder="Enter Your Product Description." required [ngClass]="{ 'is-invalid': productForm.submitted && productDescription.errors }">
+            <div *ngIf="productForm.submitted && productDescription.errors" class="invalid-feedback">
+              <div *ngIf="productDescription.errors['required']">Product Description is required</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label for="price">Price(₹)</label>
+            <input type="text" [(ngModel)]="productModel.price" #price="ngModel" class="form-control" name="price" id="price"
+              placeholder="Enter Your Product Price." pattern="^[0-9]+(.[0-9]{0,2})?$" required [ngClass]="{ 'is-invalid': productForm.submitted && price.errors }">
+            <div *ngIf="productForm.submitted && price.errors" class="invalid-feedback">
+              <div *ngIf="price.errors['required']">Price is required</div>
+              <div *ngIf="price.errors['pattern']">Enter valid price.</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label for="price">Discount(₹)</label>
+            <input type="text" [(ngModel)]="productModel.discount" #discount="ngModel" class="form-control" name="discount" id="discount"
+              placeholder="Enter Your Product Discount." pattern="^[0-9]+(.[0-9]{0,2})?$" required [ngClass]="{ 'is-invalid': productForm.submitted && discount.errors }">
+            <div *ngIf="productForm.submitted && discount.errors" class="invalid-feedback">
+              <div *ngIf="discount.errors['required']">Discount is required</div>
+              <div *ngIf="discount.errors['pattern']">Enter valid discount.</div>
+            </div>
+            <div *ngIf="discountGreaterThanPrice" style="font-size: .875em;
+        color: #dc3545;">Discount Must Be Less Than Price</div>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label for="productCode">Product Code</label>
+            <input type="text" [(ngModel)]="productModel.productCode" #productCode="ngModel" class="form-control" name="productCode" id="productCode"
+              placeholder="Enter Your Product Code." required [ngClass]="{ 'is-invalid': productForm.submitted && productCode.errors }">
+            <div *ngIf="productForm.submitted && productCode.errors" class="invalid-feedback">
+              <div *ngIf="productCode.errors['required']">Product Code is required</div>
+            </div>
+            <div *ngIf="productCodeIsAlreadyPresent" style="font-size: .875em;
+        color: #dc3545;">That Product Code is already exist</div>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label for="brand">Brand</label>
+        <input list="brands" type="text" name="brand" autocomplete="off" [(ngModel)]="productModel.brand" #brand="ngModel" class="form-control" name="brand" id="brand"
+        placeholder="Enter Brand." required [ngClass]="{ 'is-invalid': productForm.submitted && brand.errors }">
+        <datalist id="brands">
+        <option *ngFor="let b of brands" [ngValue]="b"> {{b}}
+        </datalist>
+
+        <div *ngIf="productForm.submitted && brand.errors" class="invalid-feedback">
+            <div *ngIf="brand.errors['required']">Brand is required</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label for="category">Category</label>
+
+        <input list="categories" type = "text" name="category" autocomplete="off" [(ngModel)]="productModel.category" #category="ngModel" class="form-control" name="category" id="category"
+        placeholder="Enter Category." required [ngClass]="{ 'is-invalid': productForm.submitted && category.errors }">
+        <datalist id="categories">
+        <option *ngFor="let c of categories" [ngValue]="c"> {{c}}
+        </datalist>
+
+        <div *ngIf="productForm.submitted && category.errors" class="invalid-feedback">
+            <div *ngIf="category.errors['required']">Category is required</div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-6 form-group">
+          <label for="image">Upload Product Picture</label>
+  
+          <input type="file" [(ngModel)]="productModel.productImage" #productImage="ngModel" class="form-control" name="productImage" #dataForImage
+           required [ngClass]="{ 'is-invalid': productForm.submitted && productImage.errors }" (change)="onImageUpload(dataForImage)">
+          <div *ngIf="productForm.submitted && productImage.errors" class="invalid-feedback">
+            <div *ngIf="productImage.errors['required']">Image is required</div>
+          </div>
+        </div>
+  
+        <div class="col-sm-12 form-group mb-0">
+          <button class="btn btn-primary float-right" type="submit" name="submit" value="Submit">Add</button> &nbsp;
+          <button class="btn btn-primary" type="reset" (click)="onReset(productForm)"> Clear </button>
+        </div>
+  
+      </div>
+  
+    </form>
+</div>
+
+<footer id="footer" class="text-center text-lg-start bg-light text-muted" style = "background:#f44343 !important; color: white;margin-top: 48rem;">
+
+  <div class="text-center p-4" style="color:white">
+    © 2022 Copyright:
+    <a  style="color:white">Nagarro Training</a>
+  </div>
+
+</footer>

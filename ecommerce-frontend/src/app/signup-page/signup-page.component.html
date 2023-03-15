@@ -1,0 +1,125 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style = "background:#f44343 !important;">
+  <div class="container-fluid">
+      <a class="navbar-brand abs" href="#" style ="text-align: center;
+      float: left;
+  padding: 15px;
+  text-align: center;
+  width: 100%; color: white!important; 
+  float:none;">Ecommerce</a>
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNavbar">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+  </div>
+</nav>
+
+<div class="register-form container">
+    <form id="my-form" class="needs-validation" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate enctype="multipart/form-data">
+  
+      <h4 class="modal-title"><b>Register</b> </h4>
+      <div class="row jumbotron">
+        <div class="col-sm-6 form-group">
+          <label for="name">Name</label>
+          <input type="name" [(ngModel)]="registerModel.name" #name="ngModel" class="form-control" name="name" id="name"
+            placeholder="Enter your name." required [ngClass]="{ 'is-invalid': registerForm.submitted && name.errors }">
+          <div *ngIf="registerForm.submitted && name.errors" class="invalid-feedback">
+            <div *ngIf="name.errors['required']">Fullname is required</div>
+          </div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+          <label for="email">Email</label>
+          <input type="email" [(ngModel)]="registerModel.email" #email="ngModel" class="form-control" name="email"
+            id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Enter your email." required appEmailValidation
+            [ngClass]="{ 'is-invalid': registerForm.submitted && email.errors }">
+            
+          <div *ngIf="registerForm.submitted && email.errors" class="invalid-feedback">
+            <div *ngIf="email.errors['required']">Email is required</div>
+            <div *ngIf="email.errors['pattern']">Email is invalid</div>
+            
+          </div>
+          <div *ngIf="emailAlreadyPresent" style="font-size: .875em;
+          color: #dc3545;">That Email is already exist</div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+          <label for="username">Username</label>
+          <input type="text" [(ngModel)]="registerModel.username" #username="ngModel" class="form-control" name="username"
+            id="username" placeholder="Enter your username." required
+            [ngClass]="{ 'is-invalid': registerForm.submitted && username.errors }">
+          <div *ngIf="registerForm.submitted && username.errors" class="invalid-feedback">
+            <div *ngIf="username.errors['required']">Username is required</div>
+          </div>
+          <div *ngIf="usernameAlreadyPresent" style="font-size: .875em;
+          color: #dc3545;">That Username is already exist</div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+          <label>Register As</label>
+          
+          <ng-multiselect-dropdown class = "form-control" name="role" [(ngModel)]="registerModel.role" [placeholder]="'Choose Your Role'" #role="ngModel"
+            [settings]="dropdownSettings" [data]="roles" required [ngClass]="{ 'is-invalid': registerForm.submitted && role.errors }">
+            
+          </ng-multiselect-dropdown>
+          <div *ngIf="registerForm.submitted && role.errors" class="invalid-feedback">
+            <div *ngIf="role.errors['required']">Role is required</div>
+          </div>
+          
+        </div>
+  
+        <div class="col-sm-6 form-group">
+          <label for="password">Password</label>
+          <input type="password" [(ngModel)]="registerModel.password" #password="ngModel" class="form-control"
+            name="password" id="password" placeholder="Enter your password." required
+            [ngClass]="{ 'is-invalid': registerForm.submitted && password.errors }">
+          <div *ngIf="registerForm.submitted && password.errors" class="invalid-feedback">
+            <div *ngIf="password.errors['required']">Password is required</div>
+          </div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" [(ngModel)]="registerModel.confirmPassword" #confirmPassword="ngModel"
+            class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm your password." required
+            [ngClass]="{ 'is-invalid': registerForm.submitted && confirmPassword.errors }" ngValidateEqual="password">
+          <div *ngIf="registerForm.submitted && confirmPassword.errors" class="invalid-feedback">
+            <div *ngIf="confirmPassword.errors['required']">
+              Confirm Password is required
+            </div>
+            <div *ngIf="confirmPassword.hasError('notEqual') && password.valid">
+              Confirm Password does not match
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-sm-6 form-group">
+          <label for="image" class="form-label">Upload Profile Picture</label>
+  
+          <input type="file" [(ngModel)]="registerModel.imageData" #imageData="ngModel" class="form-control" name="imageData" #dataForImage
+           required [ngClass]="{ 'is-invalid': registerForm.submitted && imageData.errors }" (change)="onImageUpload(dataForImage)">
+          <div *ngIf="registerForm.submitted && imageData.errors" class="invalid-feedback">
+            <div *ngIf="imageData.errors['required']">Image is required</div>
+          </div>
+        </div>
+  
+        <div class="col-sm-12 form-group mb-0">
+          <button class="btn btn-primary float-right" type="submit" name="submit" value="Submit">Register</button> &nbsp;
+          <button class="btn btn-primary" type="reset" (click)="onReset(registerForm)"> Clear </button>
+        </div>
+  
+      </div>
+  
+    </form>
+  
+    <div class="text-center small" style = "font-size: 15px;">Already Member? <a routerLink="/login">Login</a></div>
+    
+  </div>
+
+  <footer class="text-center text-lg-start bg-light text-muted" style = "background:#f44343 !important; color: white; margin-top: 48rem;">
+
+    <div class="text-center p-4" style="color:white">
+      © 2022 Copyright:
+      <a  style="color:white">Nagarro Training</a>
+    </div>
+
+</footer>
+  
